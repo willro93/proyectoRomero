@@ -26,9 +26,10 @@ class ProductManager {
     });
   };
 
-  getProductById = () => {
-    if (this.products.find((element) => element.id === this.idGenerator())) {
-      console.log("El producto ha sido encontrado");
+  getProductById = (id) => {
+    const product = this.products.find((element) => element.id === id);
+    if (product) {
+      return product;
     } else {
       console.log("Not found");
     }
@@ -65,4 +66,4 @@ productManager.addProduct(
   "500 unidades"
 );
 console.log(productManager.getProduct());
-console.log(productManager.getProductById());
+console.log(productManager.getProductById(2));
