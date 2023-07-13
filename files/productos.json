@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "title": "shampoo sólido",
+    "description": "El mejor shampoo",
+    "price": "$150.00",
+    "thumbnail": "img1",
+    "code": "shamp1",
+    "stock": "500 unidades"
+  }
+]
