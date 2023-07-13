@@ -15,7 +15,6 @@ class ProductManager {
     }
   };
 
-
   //método para agregar productos
   addProduct = async (title, description, price, thumbnail, code, stock) => {
     const id = this.idGenerator();
@@ -30,32 +29,43 @@ class ProductManager {
       stock,
     });
     //creación de directorio y archivo
-    try{
+    try {
       await fs.promises.mkdir(this.path, { recursive: true });
-    await fs.promises.writeFile(
-      this.path + "/productos.json",
-      JSON.stringify(this.products, null, 2, "\t")
-    );}
-    catch(error){
-      console.log(`Error al crear el archivo ${JSON.stringify(this.products, null, 2, "\t")},${error}`
-      )};
-    
+      await fs.promises.writeFile(
+        this.path + "/productos.json",
+        JSON.stringify(this.products, null, 2, "\t")
+      );
+    } catch (error) {
+      console.log(
+        `Error al crear el archivo ${JSON.stringify(
+          this.products,
+          null,
+          2,
+          "\t"
+        )},${error}`
+      );
+    }
   };
 
-  getProductById = (id) => {
+  getProductById = async (id) => {
     const product = this.products.find((element) => element.id === id);
     if (product) {
       return product;
     } else {
       console.log("Not found");
     }
+    let arch = JSON.parse(
+      await fs.promises.readFile(this.path + "/productos.json")
+    );
   };
 
   getProducts = () => {
     return this.products;
   };
-
-  updateProducts = (id) => {};
+//Método para actualizar productos
+  updateProducts = async(id, campo) => {
+   
+  };
 }
 
 const productManager = new ProductManager();
@@ -84,4 +94,4 @@ productManager.addProduct(
 //  "500 unidades"
 //);
 console.log(productManager.getProducts());
-//console.log(productManager.getProductById(2));
+console.log(productManager.getProductById(1));
