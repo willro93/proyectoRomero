@@ -54,17 +54,43 @@ class ProductManager {
     } else {
       console.log("Not found");
     }
-    let arch = JSON.parse(
-      await fs.promises.readFile(this.path + "/productos.json")
-    );
+    JSON.parse(await fs.promises.readFile(this.path + "/productos.json"));
   };
 
   getProducts = () => {
     return this.products;
   };
-//Método para actualizar productos
-  updateProducts = async(id, campo) => {
-   
+  //Método para actualizar productos
+  updateProducts = async (
+    id,
+    title,
+    description,
+    price,
+    thumbnail,
+    code,
+    stock
+  ) => {
+    const productList = await this.getProducts();
+    const updatedArray = productList.map((element) => {
+      if (element.id === id) {
+        const updateElement = {
+          ...element,
+          title,
+          description,
+          price,
+          thumbnail,
+          code,
+          stock,
+        };
+        return updateElement;
+      } else {
+        element;
+      }
+    });
+    await fs.promises.writeFile(
+      this.path + "/productos.json",
+      JSON.stringify(updatedArray, null, 2, "\t")
+    );
   };
 }
 
@@ -95,3 +121,4 @@ productManager.addProduct(
 //);
 console.log(productManager.getProducts());
 console.log(productManager.getProductById(1));
+productManager.updateProducts(1, "rerre", "wesdsd", "fdsdfd");
