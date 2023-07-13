@@ -1,11 +1,11 @@
 [
   {
     "id": 1,
-    "title": "shampoo sólido",
-    "description": "El mejor shampoo",
-    "price": "$150.00",
-    "thumbnail": "img1",
-    "code": "shamp1",
-    "stock": "500 unidades"
+    "title": "Nuevo título",
+    "description": "Nueva descripción",
+    "price": "$700.00",
+    "thumbnail": "img56",
+    "code": "Shamp5",
+    "stock": "2000 unidades"
   }
 ]

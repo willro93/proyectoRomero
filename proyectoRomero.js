@@ -54,11 +54,16 @@ class ProductManager {
     } else {
       console.log("Not found");
     }
-    JSON.parse(await fs.promises.readFile(this.path + "/productos.json"));
+    JSON.parse(
+      await fs.promises.readFile(this.path + "/productos.json", "utf-8")
+    );
   };
 
-  getProducts = () => {
-    return this.products;
+  getProducts = async () => {
+    const getList = JSON.parse(
+      await fs.promises.readFile(this.path + "/productos.json", "utf-8")
+    );
+    return getList;
   };
   //Método para actualizar productos
   updateProducts = async (
@@ -84,7 +89,7 @@ class ProductManager {
         };
         return updateElement;
       } else {
-        element;
+        return console.log("producto no encontrado");
       }
     });
     await fs.promises.writeFile(
@@ -92,6 +97,8 @@ class ProductManager {
       JSON.stringify(updatedArray, null, 2, "\t")
     );
   };
+
+  //Método para borrar productos
 }
 
 const productManager = new ProductManager();
@@ -119,6 +126,14 @@ productManager.addProduct(
 //  "shamp1",
 //  "500 unidades"
 //);
-console.log(productManager.getProducts());
+//console.log(productManager.getProducts());
 console.log(productManager.getProductById(1));
-productManager.updateProducts(1, "rerre", "wesdsd", "fdsdfd");
+productManager.updateProducts(
+  1,
+  "Nuevo título",
+  "Nueva descripción",
+  "$700.00",
+  "img56",
+  "Shamp5",
+  "2000 unidades"
+);
