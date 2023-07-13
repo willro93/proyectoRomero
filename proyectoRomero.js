@@ -59,7 +59,9 @@ class ProductManager {
     );
   };
 
+  //Lectura de productos
   getProducts = async () => {
+    //const getList = this.products;
     const getList = JSON.parse(
       await fs.promises.readFile(this.path + "/productos.json", "utf-8")
     );
@@ -99,6 +101,16 @@ class ProductManager {
   };
 
   //Método para borrar productos
+  deleteProduct = async (id) => {
+    const product = this.products.find((element) => element.id === id);
+    if (product) {
+      this.products.filter((element) => element.id !== id);
+    }
+    await fs.promises.writeFile(
+      this.path + "/productos.json",
+      JSON.stringify(this.products, null, 2, "\t")
+    );
+  };
 }
 
 const productManager = new ProductManager();
@@ -110,14 +122,14 @@ productManager.addProduct(
   "shamp1",
   "500 unidades"
 );
-//productManager.addProduct(
-//  "Acondicionador sólido",
-//  "Para cabello seco",
-//  "$140.00",
-//  "img2",
-//  "aco1",
-//  "700 unidades"
-//);
+productManager.addProduct(
+  "Acondicionador sólido",
+  "Para cabello seco",
+  "$140.00",
+  "img2",
+  "aco1",
+  "700 unidades"
+);
 //productManager.addProduct(
 //  "shampoo sólido 2",
 //  "El mejor shampoo 2",
@@ -137,3 +149,4 @@ productManager.updateProducts(
   "Shamp5",
   "2000 unidades"
 );
+productManager.deleteProduct(2);

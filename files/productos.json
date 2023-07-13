@@ -1,11 +1,20 @@
 [
   {
     "id": 1,
-    "title": "Nuevo título",
-    "description": "Nueva descripción",
-    "price": "$700.00",
-    "thumbnail": "img56",
-    "code": "Shamp5",
-    "stock": "2000 unidades"
+    "title": "shampoo sólido",
+    "description": "El mejor shampoo",
+    "price": "$150.00",
+    "thumbnail": "img1",
+    "code": "shamp1",
+    "stock": "500 unidades"
+  },
+  {
+    "id": 2,
+    "title": "Acondicionador sólido",
+    "description": "Para cabello seco",
+    "price": "$140.00",
+    "thumbnail": "img2",
+    "code": "aco1",
+    "stock": "700 unidades"
   }
 ]
