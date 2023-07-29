@@ -24,17 +24,38 @@ export default class ProductManager {
   };
 
   //método para agregar productos
-  addProduct = async (title, description, price, thumbnail, code, stock) => {
-    if (!title || !description || !price || !thumbnail || !code || !stock) {
+  addProduct = async (obj) => {
+    const {
+      title,
+      description,
+      price,
+      thumbnail,
+      category,
+      status = true,
+      code,
+      stock,
+    } = obj;
+    const listaVacia = await this.getProducts();
+    if (
+      !title ||
+      !description ||
+      !price ||
+      !category ||
+      !code ||
+      !status ||
+      !stock
+    ) {
       console.log("Es necesario llenar todos los campos");
       return;
     } else {
       const id = this.idGenerator();
-      this.products.push({
+      listaVacia.push({
         id,
         title,
         description,
         price,
+        category,
+        status,
         thumbnail,
         code,
         stock,
@@ -43,7 +64,7 @@ export default class ProductManager {
       await fs.promises.mkdir(this.path, { recursive: true });
       await fs.promises.writeFile(
         this.path + "/productos.json",
-        JSON.stringify(this.products, null, 2, "\t")
+        JSON.stringify(listaVacia, null, 2, "\t")
       );
     }
   };
@@ -96,26 +117,70 @@ export default class ProductManager {
 
   //encontrar un producto por su id
   getProductById = async (id) => {
-    const product = this.products.find((element) => element.id === id);
+    const { pid } = id;
+    const listaProductos = await this.getProducts();
+    const product = listaProductos.find(
+      (element) => element.id === parseInt(pid)
+    );
     if (product) {
       return product;
     } else {
-      console.log("Producto no encontrado");
+      //console.log("Producto no encontrado");
     }
-    JSON.parse(
-      await fs.promises.readFile(this.path + "/productos.json", "utf-8")
-    );
   };
 
   //Método para borrar productos
   deleteProduct = async (id) => {
     const listaPrevia = await this.getProducts();
-    const product = listaPrevia.filter(element => element.id != id);
-      await fs.promises.writeFile(
+    const product = listaPrevia.filter((element) => element.id != id);
+    await fs.promises.writeFile(
       this.path + "/productos.json",
       JSON.stringify(product, null, 2, "\t")
     );
-    }
-    
   };
+}
 
+//await productManager.addProduct(
+//    "shampoo sólido",
+//    "El mejor shampoo",
+//    "$150.00",
+//    "img1",
+//    "shamp1",
+//    "500 unidades"
+//  );
+//  await productManager.addProduct(
+//    "Acondicionador sólido",
+//    "Para cabello seco",
+//    "$140.00",
+//    "img2",
+//    "aco1",
+//    "700 unidades"
+//  );
+//  await productManager.addProduct(
+//    "shampoo sólido",
+//    "El mejor shampoo 2",
+//    "$150.00",
+//    "img3",
+//    "shamp1",
+//    "500 unidades"
+//  );
+//  await productManager.addProduct(
+//      "Acondicionador sólido",
+//      "Para cabello seco",
+//      "$140.00",
+//      "img4",
+//      "aco1",
+//      "700 unidades"
+//    );
+//console.log(await productManager.getProducts());
+//console.log(await productManager.getProductById(2));
+//await productManager.updateProducts(
+//  1,
+//  "Nuevo título",
+//  "Nueva descripción",
+//  "$700.00",
+//  "img56",
+//  "Shamp5",
+//  "2000 unidades"
+//);
+//await productManager.deleteProduct(1);
